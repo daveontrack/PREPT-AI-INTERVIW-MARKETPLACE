@@ -119,7 +119,7 @@ export default function HeroPreview() {
               Sessions
             </span>
           </div>
-          <p className="font-serif text-2xl sm:text-3xl bg-linear-to-br from-stone-100 to-stone-400 bg-clip-text text-transparent leading-none mb-1">
+          <p className="font-serif text-2xl sm:text-3xl bg-linear-to-br from-stone-700 to-stone-500 dark:from-stone-100 dark:to-stone-400 bg-clip-text text-transparent leading-none mb-1">
             <AnimatedNumber value={2400} suffix="+" />
           </p>
           <p className="text-[9px] text-muted-foreground/70">
@@ -272,7 +272,7 @@ export default function HeroPreview() {
               </p>
               <p className="text-[8px] text-muted-foreground/70">AI-generated</p>
             </div>
-            <span className="ml-auto font-serif text-lg bg-linear-to-br from-amber-300 to-amber-500 bg-clip-text text-transparent font-bold">
+            <span className="ml-auto font-serif text-lg bg-linear-to-br from-amber-500 to-amber-700 dark:from-amber-300 dark:to-amber-500 bg-clip-text text-transparent font-bold">
               86
             </span>
           </div>

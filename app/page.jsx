@@ -95,10 +95,10 @@ export default function Home() {
 
               {/* Headline — massive, staggered */}
               <h1 className='font-serif text-[clamp(2.7rem,7vw,6.5rem)] tracking-[-0.04em] leading-[0.9] mb-8'>
-                <span className='block animate-in fade-in slide-in-from-bottom-6 duration-700 delay-100 fill-mode-both bg-linear-to-br from-stone-200 via-stone-300 to-stone-500 bg-clip-text text-transparent pb-3'>
+                <span className='block animate-in fade-in slide-in-from-bottom-6 duration-700 delay-100 fill-mode-both bg-linear-to-br from-stone-700 via-stone-500 to-stone-400 dark:from-stone-200 dark:via-stone-300 dark:to-stone-500 bg-clip-text text-transparent pb-3'>
                   Ace your next interview
                 </span>
-                
+
                 <span className='block animate-in fade-in slide-in-from-bottom-6 duration-700 delay-300 fill-mode-both bg-linear-to-br from-amber-300 via-amber-400 to-amber-600 bg-clip-text text-transparent'>
                   with real experts
                 </span>
@@ -152,7 +152,7 @@ export default function Home() {
                       2,400+ engineers
                     </span>
                     <span className='text-[11px] text-muted-foreground'>
-                      cracked FAANG via Prept
+                      cracked FAANG via EVKA
                     </span>
                   </div>
                   <div className='w-px h-8 bg-accent' />
@@ -244,8 +244,10 @@ export default function Home() {
             >
               <div className='mt-5 rounded-xl bg-muted/30 backdrop-blur-md border border-border p-5 flex justify-between items-end'>
                 <div>
-                  <p className='text-xs text-muted-foreground/70 mb-1'>Your balance</p>
-                  <p className='font-serif text-4xl leading-none bg-linear-to-br from-amber-300 to-amber-500 bg-clip-text text-transparent'>
+                  <p className='text-xs text-muted-foreground/70 mb-1'>
+                    Your balance
+                  </p>
+                  <p className='font-serif text-4xl leading-none bg-linear-to-br from-amber-500 to-amber-700 dark:from-amber-300 dark:to-amber-500 bg-clip-text text-transparent'>
                     28
                   </p>
                   <p className='text-xs text-muted-foreground/70 mt-1'>
@@ -343,7 +345,10 @@ export default function Home() {
 
               <ul className='relative space-y-3'>
                 {role.perks.map((p) => (
-                  <li key={p} className='flex gap-3 text-sm text-muted-foreground'>
+                  <li
+                    key={p}
+                    className='flex gap-3 text-sm text-muted-foreground'
+                  >
                     <span className='mt-0.5 min-w-4 h-4 rounded-full bg-amber-400/10 border border-amber-400/20 flex items-center justify-center text-xs text-amber-400'>
                       ✓
                     </span>
@@ -403,16 +408,16 @@ export default function Home() {
                 <span className='relative inline-flex rounded-full h-1.5 w-1.5 bg-amber-400' />
               </span>
               <span className='text-[11px] text-muted-foreground font-medium'>
-                Join 2,400+ engineers already on Prept
+                Join 2,400+ engineers already on EVKA
               </span>
             </div>
 
             <h2 className='font-serif text-[clamp(2rem,4vw,3.5rem)] leading-[1.05] tracking-[-0.03em] mb-5'>
-              <span className='bg-linear-to-br from-stone-100 via-stone-200 to-stone-500 bg-clip-text text-transparent'>
+              <span className='bg-linear-to-br from-stone-700 via-stone-600 to-stone-400 dark:from-stone-100 dark:via-stone-200 dark:to-stone-500 bg-clip-text text-transparent'>
                 Your next interview
               </span>
               <br />
-              <span className='bg-linear-to-br from-amber-300 via-amber-400 to-amber-600 bg-clip-text text-transparent'>
+              <span className='bg-linear-to-br from-amber-300 via-amber-400 to-amber-600 dark:from-amber-300 dark:via-amber-400 dark:to-amber-600 bg-clip-text text-transparent'>
                 starts here
               </span>
             </h2>

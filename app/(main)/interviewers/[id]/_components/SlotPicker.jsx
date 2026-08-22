@@ -154,7 +154,7 @@ export default function SlotPicker({
             </div>
             <div className="text-right shrink-0">
               <p className="text-xs text-muted-foreground/70">Cost</p>
-              <p className="font-serif text-2xl leading-none bg-linear-to-br from-amber-300 to-amber-500 bg-clip-text text-transparent">
+              <p className="font-serif text-2xl leading-none bg-linear-to-br from-amber-500 to-amber-700 dark:from-amber-300 dark:to-amber-500 bg-clip-text text-transparent">
                 {interviewerCredits}
                 <span className="text-xs font-sans text-muted-foreground ml-1">
                   cr
@@ -273,7 +273,7 @@ export default function SlotPicker({
 
             <div className="flex justify-between items-center">
               <span className="text-xs text-muted-foreground">Credits charged</span>
-              <span className="font-serif text-lg bg-linear-to-br from-amber-300 to-amber-500 bg-clip-text text-transparent leading-none">
+              <span className="font-serif text-lg bg-linear-to-br from-amber-500 to-amber-700 dark:from-amber-300 dark:to-amber-500 bg-clip-text text-transparent leading-none">
                 −{interviewerCredits}
               </span>
             </div>

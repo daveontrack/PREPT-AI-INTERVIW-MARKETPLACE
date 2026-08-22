@@ -110,8 +110,8 @@ export default function EarningsSection({ stats, history }) {
             <p
               className={`font-serif text-4xl leading-none tracking-tight ${
                 stat.gold
-                  ? "bg-linear-to-br from-amber-300 to-amber-500 bg-clip-text text-transparent"
-                  : "bg-linear-to-br from-stone-100 to-stone-400 bg-clip-text text-transparent"
+                  ? "bg-linear-to-br from-amber-500 to-amber-700 dark:from-amber-300 dark:to-amber-500 bg-clip-text text-transparent"
+                  : "bg-linear-to-br from-stone-700 to-stone-500 dark:from-stone-100 dark:to-stone-400 bg-clip-text text-transparent"
               }`}
             >
               {stat.value}

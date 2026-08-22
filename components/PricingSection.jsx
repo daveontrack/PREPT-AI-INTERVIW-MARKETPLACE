@@ -51,8 +51,8 @@ export default function PricingSection() {
               <span
                 className={`font-serif text-5xl leading-none tracking-tight ${
                   plan.featured
-                    ? "bg-linear-to-br from-amber-300 to-amber-500 bg-clip-text text-transparent"
-                    : "bg-linear-to-br from-stone-100 to-stone-400 bg-clip-text text-transparent"
+                    ? "bg-linear-to-br from-amber-500 to-amber-700 dark:from-amber-300 dark:to-amber-500 bg-clip-text text-transparent"
+                    : "bg-linear-to-br from-stone-700 to-stone-500 dark:from-stone-100 dark:to-stone-400 bg-clip-text text-transparent"
                 }`}
               >
                 {plan.price}

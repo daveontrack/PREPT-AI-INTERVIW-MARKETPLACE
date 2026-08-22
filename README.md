@@ -1,18 +1,19 @@
 <div align="center">
 
-# 🎯 PREPT — AI Interview Marketplace
+# 🎯 EVKA — AI Interview Marketplace
 
 **Practice interviews with real experts. Get AI-powered feedback after every session.**
 
 </div>
 
-PREPT is a full-stack interview marketplace that connects **candidates** with **professional interviewers** over HD video calls. Sessions are analyzed by **Google Gemini**, which generates a detailed feedback report — technical, communication and problem-solving scores, strengths, improvements, concepts covered, and a question-by-question breakdown.
+EVKA is a full-stack interview marketplace that connects **candidates** with **professional interviewers** over HD video calls. Sessions are analyzed by **Google Gemini**, which generates a detailed feedback report — technical, communication and problem-solving scores, strengths, improvements, concepts covered, and a question-by-question breakdown.
 
 ---
 
 ## ✨ Features
 
 ### For candidates 🎯
+
 - Browse interviewers by category (Frontend, Backend, System Design, DSA, Behavioral, DevOps, Mobile)
 - Book 45-minute sessions using monthly **credits** (Free / Starter / Pro plans, with rollover)
 - Join **HD video calls** with persistent chat via Stream
@@ -21,12 +22,14 @@ PREPT is a full-stack interview marketplace that connects **candidates** with **
 - Review session **recordings** and re-open feedback any time
 
 ### For interviewers 🧑‍💼
+
 - Set your own availability and session rates
 - **AI question generator** for each session
 - Earn credits per session — track earnings and **withdraw** any time (20% platform fee)
 - Admin **review & approve** flow for payout requests (email notification → password-gated approval)
 
 ### Platform 🛡️
+
 - Clerk authentication with role-based onboarding
 - Arcjet bot protection & rate limiting on critical actions
 - Signed **Stream webhook** verification (HMAC) for transcription/recording events
@@ -36,16 +39,16 @@ PREPT is a full-stack interview marketplace that connects **candidates** with **
 
 ## 🧱 Tech Stack
 
-| Layer        | Technology |
-|--------------|------------|
-| Framework    | [Next.js 16](https://nextjs.org) (App Router) + React 19 |
-| Auth         | [Clerk](https://clerk.com) |
+| Layer        | Technology                                                                     |
+| ------------ | ------------------------------------------------------------------------------ |
+| Framework    | [Next.js 16](https://nextjs.org) (App Router) + React 19                       |
+| Auth         | [Clerk](https://clerk.com)                                                     |
 | Database     | PostgreSQL (Supabase) via [Prisma 7](https://prisma.io) + `@prisma/adapter-pg` |
-| Video & Chat | [Stream Video](https://getstream.io) + Stream Chat (transcription, recording) |
-| AI           | [Google Gemini](https://ai.google.dev) (`gemini-3.5-flash`) |
-| Emails       | [Resend](https://resend.com) + React Email |
-| Protection   | [Arcjet](https://arcjet.com) (bot detection, rate limiting) |
-| Styling      | Tailwind CSS 4, shadcn-style UI components, animate-ui |
+| Video & Chat | [Stream Video](https://getstream.io) + Stream Chat (transcription, recording)  |
+| AI           | [Google Gemini](https://ai.google.dev) (`gemini-3.5-flash`)                    |
+| Emails       | [Resend](https://resend.com) + React Email                                     |
+| Protection   | [Arcjet](https://arcjet.com) (bot detection, rate limiting)                    |
+| Styling      | Tailwind CSS 4, shadcn-style UI components, animate-ui                         |
 
 ---
 
@@ -96,7 +99,7 @@ ADMIN_PAYOUT_PASSWORD=change-me
 NEXT_PUBLIC_APP_URL=http://localhost:3000
 ```
 
-> ⚠️ In production, `NEXT_PUBLIC_APP_URL` **must** be your real domain (e.g. `https://prept.example.com`) — payout email links are built from it. On Vercel it falls back to `VERCEL_URL` automatically if unset.
+> ⚠️ In production, `NEXT_PUBLIC_APP_URL` **must** be your real domain (e.g. `https://EVKA.example.com`) — payout email links are built from it. On Vercel it falls back to `VERCEL_URL` automatically if unset.
 
 ### 3. Set up the database
 
@@ -118,13 +121,13 @@ Open [http://localhost:3000](http://localhost:3000).
 
 ## 📜 Available Scripts
 
-| Command            | Description                              |
-|--------------------|------------------------------------------|
-| `npm run dev`      | Start the Next.js dev server             |
+| Command            | Description                               |
+| ------------------ | ----------------------------------------- |
+| `npm run dev`      | Start the Next.js dev server              |
 | `npm run build`    | Generate Prisma client + production build |
-| `npm start`        | Serve the production build               |
-| `npm run lint`     | Run ESLint                               |
-| `npx tsc --noEmit` | Type-check the project                   |
+| `npm start`        | Serve the production build                |
+| `npm run lint`     | Run ESLint                                |
+| `npx tsc --noEmit` | Type-check the project                    |
 
 ---
 
