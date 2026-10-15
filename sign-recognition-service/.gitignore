@@ -1,0 +1,7 @@
+.venv/
+**/__pycache__/
+data/raw/
+data/landmarks/
+data/splits/
+models/*.pt
+models/*.onnx

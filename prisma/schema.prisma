@@ -1,0 +1,372 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client"
+  output   = "../lib/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// ─── ENUMS ───────────────────────────────────────────────
+
+enum UserRole {
+  UNASSIGNED
+  INTERVIEWEE
+  INTERVIEWER
+}
+
+enum BookingStatus {
+  SCHEDULED
+  COMPLETED
+  CANCELLED
+}
+
+enum PayoutStatus {
+  PROCESSING
+  PROCESSED
+}
+
+enum InterviewCategory {
+  FRONTEND
+  BACKEND
+  FULLSTACK
+  DSA
+  SYSTEM_DESIGN
+  BEHAVIORAL
+  DEVOPS
+  MOBILE
+}
+
+enum FeedbackRating {
+  POOR
+  AVERAGE
+  GOOD
+  EXCELLENT
+}
+
+enum TransactionType {
+  CREDIT_PURCHASE
+  BOOKING_DEDUCTION
+  BOOKING_EARNING
+  ADMIN_ADJUSTMENT
+}
+
+// Solo (AI-only) mock interview lifecycle
+enum SoloStatus {
+  IN_PROGRESS
+  COMPLETED
+}
+
+// Ethiopian Sign Language recognition lifecycle
+enum SignRecognitionStatus {
+  ACTIVE
+  PAUSED
+  ENDED
+}
+
+// In-app notification kinds
+enum NotificationType {
+  BOOKING_CONFIRMED
+  BOOKING_RECEIVED
+  SESSION_REMINDER
+  FEEDBACK_READY
+}
+
+// ─── USER ────────────────────────────────────────────────
+
+model User {
+  id          String   @id @default(uuid())
+  clerkUserId String   @unique
+  email       String   @unique
+  name        String?
+  imageUrl    String?
+  role        UserRole @default(UNASSIGNED)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // interviewee-only
+  credits                Int       @default(0)
+  currentPlan            String    @default("free")
+  creditsLastAllocatedAt DateTime?
+
+  // stripe billing
+  stripeCustomerId     String? @unique
+  stripeSubscriptionId String?
+
+  // interviewer-only
+  bio           String?
+  title         String?
+  company       String?
+  yearsExp      Int?
+  categories    InterviewCategory[]
+  creditRate    Int                 @default(1)
+  creditBalance Int                 @default(0)
+
+  availabilities        Availability[]
+  bookingsAsInterviewee Booking[]           @relation("IntervieweeBookings")
+  bookingsAsInterviewer Booking[]           @relation("InterviewerBookings")
+  transactions          CreditTransaction[]
+  payouts               Payout[]
+  soloInterviews        SoloInterview[]
+  resumes               Resume[]
+  notifications         Notification[]
+  signSessions          SignRecognitionSession[] @relation("SignSessions")
+}
+
+// ─── AVAILABILITY ────────────────────────────────────────
+// Recurring daily availability window. The interviewer sets a single
+// daily time range (HH:mm) which repeats every day while active.
+
+model Availability {
+  id            String   @id @default(uuid())
+  interviewerId String   @unique
+  interviewer   User     @relation(fields: [interviewerId], references: [id], onDelete: Cascade)
+  isActive      Boolean  @default(true)
+  startTime     String
+  endTime       String
+  timezone      String   @default("UTC")
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@index([interviewerId])
+}
+
+// ─── BOOKINGS ────────────────────────────────────────────
+
+model Booking {
+  id             String        @id @default(uuid())
+  intervieweeId  String
+  interviewee    User          @relation("IntervieweeBookings", fields: [intervieweeId], references: [id])
+  interviewerId  String
+  interviewer    User          @relation("InterviewerBookings", fields: [interviewerId], references: [id])
+  startTime      DateTime
+  endTime        DateTime
+  status         BookingStatus @default(SCHEDULED)
+  creditsCharged Int
+  streamCallId   String?       @unique
+  recordingUrl   String?
+  feedback       Feedback?
+  // Collaborative code editor — last snapshot saved from the live interview,
+  // so both parties can review the code after the call.
+  sharedCode     String?       @db.Text
+  sharedLanguage String?       @default("javascript")
+  // Set when the pre-session reminder email has gone out (idempotency guard).
+  remindedAt     DateTime?
+  transactions   CreditTransaction[]
+  // Ethiopian Sign Language recognition (optional accessibility feature)
+  signSessions   SignRecognitionSession[]
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+
+  @@index([status, createdAt])
+  @@index([interviewerId, status])
+  @@index([intervieweeId, status])
+}
+
+// ─── FEEDBACK ────────────────────────────────────────────
+
+model Feedback {
+  id             String         @id @default(uuid())
+  bookingId      String         @unique
+  booking        Booking        @relation(fields: [bookingId], references: [id], onDelete: Cascade)
+  // AI-generated post-interview report (Stream webhook → Gemini)
+  summary             String?         @db.Text
+  technical           String?         @db.Text
+  communication       String?         @db.Text
+  problemSolving      String?         @db.Text
+  recommendation      String?
+  strengths           String[]
+  improvements        String[]
+  overallRating       FeedbackRating?
+  // Numeric 1-10 scores backing the visual score bars
+  technicalScore      Int?
+  communicationScore  Int?
+  problemSolvingScore Int?
+  // Extended analysis sections
+  conceptsCovered     String[]
+  pace                String?         @db.Text
+  nextSteps           String[]
+  questionBreakdown   Json?
+  // Interviewee rating of the interviewer
+  rating         Int?
+  comment        String?        @db.Text
+  // Interviewer's rating of the interviewee (AI report)
+  sessionRating  Int?
+  sessionComment String?        @db.Text
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt
+}
+
+// ─── CREDIT TRANSACTIONS ─────────────────────────────────
+// CreditTransaction also doubles as the Stripe webhook's idempotency ledger:
+// `stripeInvoiceId` is unique, so a retried `invoice.paid` event can never
+// grant the same month's credits twice.
+
+model CreditTransaction {
+  id             String          @id @default(uuid())
+  userId         String
+  user           User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  amount         Int
+  type           TransactionType
+  bookingId      String?
+  booking        Booking?        @relation(fields: [bookingId], references: [id])
+  stripeInvoiceId String?        @unique
+  createdAt      DateTime        @default(now())
+}
+
+// ─── SIGN LANGUAGE RECOGNITION ────────────────────────────────────
+// Experimental sign-to-text assistance for live interviews. Landmarks are
+// extracted in the browser (MediaPipe) and sent to a separate Python service
+// for inference; ONLY candidate-confirmed text is persisted here — never raw
+// video, landmarks or motion sequences.
+
+model SignRecognitionSession {
+  id           String                @id @default(uuid())
+  bookingId    String
+  booking      Booking               @relation(fields: [bookingId], references: [id], onDelete: Cascade)
+  candidateId  String
+  candidate    User                  @relation("SignSessions", fields: [candidateId], references: [id], onDelete: Cascade)
+  // Planned expansion: "AmHaric-Sign" etc. Only EthSL is supported initially.
+  language     String                @default("EthSL")
+  status       SignRecognitionStatus @default(ACTIVE)
+  // Which recognition model produced the entries (for quality tracking)
+  modelVersion String?
+  // Explicit candidate consent, recorded at session creation
+  consentAt    DateTime              @default(now())
+  startedAt    DateTime              @default(now())
+  endedAt      DateTime?
+  transcripts  SignTranscript[]
+
+  @@index([bookingId, startedAt])
+  @@index([candidateId, startedAt])
+}
+
+model SignTranscript {
+  id             String                 @id @default(uuid())
+  sessionId      String
+  session        SignRecognitionSession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+  // Confirmed text only (candidate may edit the raw prediction before saving)
+  text           String                 @db.Text
+  // Recognition confidence at confirmation time — for review only, never a
+  // guarantee of correctness
+  confidence     Float?
+  // Provenance: "sign_recognition" (confirmed prediction) | "typed" (candidate
+  // typed it as a communication alternative)
+  source         String                 @default("sign_recognition")
+  edited         Boolean                @default(false)
+  sequenceNumber Int
+  confirmedAt    DateTime               @default(now())
+
+  @@unique([sessionId, sequenceNumber])
+  @@index([sessionId, confirmedAt])
+}
+
+// ─── SOLO AI MOCK INTERVIEWS ─────────────────────────────────────
+// Text-based practice interviews with Gemini (no booking / human interviewer).
+// Uses the same 1-10 score fields + FeedbackRating as Feedback so the skill
+// progression dashboard can aggregate live and solo sessions together.
+
+model SoloInterview {
+  id            String       @id @default(uuid())
+  userId        String
+  user          User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  category      InterviewCategory
+  // Optional target role context passed by the candidate (e.g. "Frontend Eng at Stripe")
+  roleTitle     String?
+  // Set when the questions were derived from an uploaded resume
+  resumeId      String?
+  status        SoloStatus   @default(IN_PROGRESS)
+  // [{ question, modelAnswer }] — modelAnswer hidden until the session completes
+  questions     Json
+  // [{ question, answer }] — filled in as the candidate answers
+  answers       Json         @default("[]")
+  // AI report (same shape as the live-session Feedback report)
+  summary             String?  @db.Text
+  technical           String?  @db.Text
+  communication       String?  @db.Text
+  problemSolving      String?  @db.Text
+  recommendation      String?
+  strengths           String[]
+  improvements        String[]
+  conceptsCovered     String[]
+  technicalScore      Int?
+  communicationScore  Int?
+  problemSolvingScore Int?
+  overallRating       FeedbackRating?
+  questionBreakdown   Json?
+  startedAt      DateTime     @default(now())
+  completedAt    DateTime?
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+
+  @@index([userId, createdAt])
+  @@index([userId, status])
+}
+
+// ─── RESUME / CV ANALYSIS ─────────────────────────────────────────
+// Uploaded PDF CVs: raw bytes stored privately in Postgres (only reachable
+// through the authenticated download route) plus the extracted analysis used
+// to generate personalized interview questions.
+
+model Resume {
+  id                 String              @id @default(uuid())
+  userId             String
+  user               User                @relation(fields: [userId], references: [id], onDelete: Cascade)
+  fileName           String
+  fileSize           Int
+  mimeType           String              @default("application/pdf")
+  fileData           Bytes?
+  // Extracted from the PDF by Gemini
+  summary            String?             @db.Text
+  skills             String[]
+  projects           Json                @default("[]")
+  suggestedCategories InterviewCategory[]
+  // [{ question, modelAnswer }] personalized to this resume
+  questions          Json                @default("[]")
+  createdAt          DateTime            @default(now())
+
+  @@index([userId, createdAt])
+}
+
+// ─── IN-APP NOTIFICATIONS ──────────────────────────────────────────
+
+model Notification {
+  id        String           @id @default(uuid())
+  userId    String
+  user      User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  type      NotificationType
+  title     String
+  body      String?          @db.Text
+  // In-app destination (e.g. "/appointments", "/progress")
+  link      String?
+  readAt    DateTime?
+  createdAt DateTime         @default(now())
+
+  @@index([userId, readAt])
+  @@index([userId, createdAt])
+}
+
+// ─── PAYOUTS ────────────────────────────────────────────────
+
+model Payout {
+  id            String       @id @default(uuid())
+  interviewerId String
+  interviewer   User         @relation(fields: [interviewerId], references: [id], onDelete: Cascade)
+  credits       Int
+  platformFee   Float
+  netAmount     Float
+  paymentMethod String
+  paymentDetail String
+  status        PayoutStatus @default(PROCESSING)
+  adminNote     String?
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
+  processedAt   DateTime?
+  processedBy   String?
+  @@index([status, createdAt])
+  @@index([interviewerId, status])
+}
+

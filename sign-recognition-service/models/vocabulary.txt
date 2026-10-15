@@ -1,0 +1,13 @@
+# EthSL gloss vocabulary — one gloss per line.
+#
+# This file is intentionally EMPTY of glosses: labels must be defined and
+# verified with Ethiopian Sign Language users and qualified annotators (see
+# ../DATASET.md §3). Never machine-translate Amharic/English words into
+# glosses and assume equivalence.
+#
+# Once validated, list your canonical glosses below, e.g.:
+#   GLOSS_HELLO
+#   GLOSS_EXPLAIN
+#
+# Training annotations are validated against this file:
+#   python training/split_by_signer.py --vocabulary models/vocabulary.txt …
