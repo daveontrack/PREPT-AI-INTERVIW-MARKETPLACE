@@ -1,61 +1,67 @@
-<div align="center">
+# 🎯 InterviewLoop — AI-Powered Interview Marketplace
 
-# 🎯 InterviewLoop — AI Interview Marketplace
+**Practice interviews with real experts. Get personalized, AI-powered feedback. Build your career with confidence.**
 
-**Practice interviews with real experts. Get AI-powered feedback after every session.**
+InterviewLoop is a full-stack interview preparation marketplace that connects candidates with experienced interviewers through real-time HD video sessions. Powered by Google Gemini, the platform analyzes completed interviews and generates detailed feedback on technical knowledge, communication, problem-solving, strengths, areas for improvement, and question-by-question performance.
 
-</div>
-
-InterviewLoop is a full-stack interview marketplace that connects **candidates** with **professional interviewers** over HD video calls. Sessions are analyzed by **Google Gemini**, which generates a detailed feedback report — technical, communication and problem-solving scores, strengths, improvements, concepts covered, and a question-by-question breakdown.
+Beyond live interviews, InterviewLoop offers AI-powered solo practice, CV analysis, skill progression tracking, collaborative coding, and experimental Ethiopian Sign Language (EthSL) assistance.
 
 ---
 
 ## ✨ Features
 
-### For candidates 🎯
+### 🎯 For Candidates
 
-- Browse interviewers by category (Frontend, Backend, System Design, DSA, Behavioral, DevOps, Mobile)
-- Book 45-minute sessions using monthly **credits** (Free / Starter / Pro plans, with rollover)
-- Join **HD video calls** with persistent chat via Stream
-- Get live **AI-generated questions** tailored to the interview category
-- Receive a full **AI feedback report** after every completed interview
-- Review session **recordings** and re-open feedback any time
-- **Collaborative live code editor** inside every call (Monaco + Yjs — both sides type in the same document, saved for review afterwards)
-- **Solo AI mock interviews** — free text-based practice with Gemini, no booking required
-- **Resume / CV analysis** — upload a PDF, get extracted skills/projects and personalized interview questions
-- **Skill progression dashboard** aggregating every AI report (live + solo) into trend charts
-- **Calendar invites (.ics)** on every booking plus confirmation & reminder emails
-- **Sign-language assistance (experimental EthSL)** — sign during a live call, review each prediction, and share only confirmed text with the interviewer (browser-side MediaPipe landmarks + a separate Python recognition service)
+- **Discover Interviewers:** Browse and filter interviewers by Frontend, Backend, Full-Stack, Data Structures & Algorithms (DSA), System Design, Behavioral, DevOps, and Mobile Development.
+- **Flexible Credit Plans:** Purchase subscription plans and use monthly credits to book 45-minute interview sessions, with rollover support where applicable.
+- **HD Video Interviews:** Join real-time video sessions with persistent chat powered by Stream.
+- **AI-Generated Questions:** Practice with interview questions tailored to the selected interview category.
+- **Detailed AI Feedback:** Receive personalized reports covering technical skills, communication, problem-solving, strengths, improvement areas, concepts covered, and individual answers.
+- **Session History:** Revisit previous interviews, recordings where available, and feedback reports.
+- **Collaborative Code Editor:** Solve coding problems together using Monaco Editor and Yjs, with shared editing during interviews and code saved for later review.
+- **Solo AI Mock Interviews:** Practice independently with Gemini without booking an interviewer.
+- **CV / Resume Analysis:** Upload a PDF resume to extract skills and projects and generate personalized interview questions.
+- **Skill Progress Tracking:** View performance trends across live interviews and solo practice sessions.
+- **Calendar and Email Notifications:** Receive booking confirmations, calendar invitations (`.ics`), and scheduled reminders.
+- **Experimental EthSL Assistance:** Explore sign-language recognition during live calls using browser-side MediaPipe landmarks and a separate Python recognition service. Review predictions before sharing confirmed text with the interviewer.
 
-### For interviewers 🧑‍💼
+### 🧑‍💼 For Interviewers
 
-- Set your own availability and session rates
-- **AI question generator** for each session
-- Earn credits per session — track earnings and **withdraw** any time (20% platform fee)
-- Admin **review & approve** flow for payout requests (email notification → password-gated approval)
+- **Professional Profiles:** Showcase your experience, skills, specialties, and professional background.
+- **Availability Management:** Configure your available interview times and session rates.
+- **AI Question Generation:** Prepare relevant questions for upcoming sessions.
+- **Credit-Based Earnings:** Earn credits from completed interviews and track your earnings.
+- **Withdrawal Requests:** Request payouts with a transparent 20% platform fee.
+- **Admin Payout Review:** Support a controlled payout approval process with email notifications and password-protected authorization.
 
-### Platform 🛡️
+### 🛡️ Platform and Security
 
-- Clerk authentication with role-based onboarding
-- Arcjet bot protection & rate limiting on critical actions
-- Signed **Stream webhook** verification (HMAC) for transcription/recording events
-- Server-side ownership checks on every data query (no cross-user data exposure)
+- **Authentication and Roles:** Clerk authentication with role-based onboarding and access control.
+- **Bot Protection:** Arcjet bot detection and rate limiting for critical actions.
+- **Verified Webhooks:** HMAC-SHA256 verification for Stream webhook events.
+- **Data Ownership:** Server-side authorization checks to prevent unauthorized access to users' data.
+- **Protected AI Reports:** Feedback is accessible through authorized, user-scoped bookings.
+- **Secure Configuration:** Sensitive API keys and secrets remain server-side.
 
 ---
 
-## 🧱 Tech Stack
+## 🧱 Technology Stack
 
-| Layer        | Technology                                                                     |
-| ------------ | ------------------------------------------------------------------------------ |
-| Framework    | [Next.js 16](https://nextjs.org) (App Router) + React 19                       |
-| Auth         | [Clerk](https://clerk.com)                                                     |
-| Database     | PostgreSQL (Supabase) via [Prisma 7](https://prisma.io) + `@prisma/adapter-pg` |
-| Video & Chat | [Stream Video](https://getstream.io) + Stream Chat (transcription, recording)  |
-| AI           | [Google Gemini](https://ai.google.dev) (`gemini-3.5-flash`)                    |
-| Sign-to-text | MediaPipe (browser landmarks) + FastAPI service (`sign-recognition-service/`) |
-| Emails       | [Resend](https://resend.com) + React Email                                     |
-| Protection   | [Arcjet](https://arcjet.com) (bot detection, rate limiting)                    |
-| Styling      | Tailwind CSS 4, shadcn-style UI components, animate-ui                         |
+| Layer | Technology |
+|---|---|
+| Framework | Next.js 16, App Router |
+| Frontend | React 19, TypeScript, Tailwind CSS 4 |
+| UI Components | shadcn-style components, animate-ui |
+| Authentication | Clerk |
+| Database | PostgreSQL on Supabase |
+| ORM | Prisma 7 with `@prisma/adapter-pg` |
+| Video and Chat | Stream Video and Stream Chat |
+| AI | Google Gemini (`gemini-3.5-flash`, as configured) |
+| Collaborative Editor | Monaco Editor, Yjs, WebSocket synchronization |
+| Sign Language | MediaPipe and FastAPI |
+| Email | Resend and React Email |
+| Security | Arcjet |
+| Deployment | Vercel or another compatible Next.js hosting platform |
 
 ---
 
@@ -63,71 +69,108 @@ InterviewLoop is a full-stack interview marketplace that connects **candidates**
 
 ### Prerequisites
 
-- **Node.js 20+**
-- A **PostgreSQL** database (Supabase recommended)
-- Accounts/keys for: Clerk, Stream, Google AI, Resend, Arcjet
+Install or prepare the following:
 
-### 1. Install dependencies
+- Node.js 20 or a compatible version required by your dependencies
+- npm
+- PostgreSQL database (Supabase recommended)
+- Clerk account
+- Stream account
+- Google AI Studio API key
+- Resend account
+- Arcjet API key
+- Python and pip for the experimental sign-language service
+
+### 1. Clone the Repository
+
+```bash
+git clone https://github.com/daveontrack/AI-Powered-Mock-Interview-Marketplace-Platform.git
+cd AI-Powered-Mock-Interview-Marketplace-Platform
+```
+
+### 2. Install Dependencies
 
 ```bash
 npm install
 ```
 
-### 2. Configure environment variables
+### 3. Configure Environment Variables
 
-Copy the values into a `.env.local` file (`.env*` files are gitignored):
+Create a `.env.local` file in the project root and configure the following variables.
 
 ```env
-# ── Clerk (dashboard.clerk.com) ───────────────────────────
-NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=...
-CLERK_SECRET_KEY=...
+# Clerk Authentication
+NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=
+CLERK_SECRET_KEY=
 
-# ── Database (Supabase → Settings → Database) ─────────────
-DATABASE_URL=postgresql://...
+# PostgreSQL / Supabase
+DATABASE_URL=
 
-# ── Stream (dashboard.getstream.io) ────────────────────────
-NEXT_PUBLIC_STREAM_API_KEY=...
-STREAM_SECRET_KEY=...          # (STREAM_API_SECRET also works)
+# Stream Video and Chat
+NEXT_PUBLIC_STREAM_API_KEY=
+STREAM_SECRET_KEY=
 
-# ── Google AI (aistudio.google.com) ────────────────────────
-GEMINI_API_KEY=...
+# Google Gemini
+GEMINI_API_KEY=
 
-# ── Arcjet (console.arcjet.com) ────────────────────────────
-ARCJET_KEY=...
+# Arcjet Security
+ARCJET_KEY=
 
-# ── Resend (resend.com) ────────────────────────────────────
-RESEND_API_KEY=...
+# Resend Email
+RESEND_API_KEY=
 
-# ── Payout admin (used for /payout/[id] authorization) ─────
-ADMIN_EMAIL=admin@example.com
-ADMIN_PAYOUT_PASSWORD=change-me
+# Payout Administration
+ADMIN_EMAIL=
+ADMIN_PAYOUT_PASSWORD=
 
-# ── App URL (must be the deployed domain in production!) ───
+# Application URL
 NEXT_PUBLIC_APP_URL=http://localhost:3000
 
-# ── Collaborative code editor (npm run collab) ────────────
+# Collaborative Code Editor
 NEXT_PUBLIC_COLLAB_WS_URL=ws://localhost:1234
 
-# ── Cron protection for /api/cron/reminders ───────────────
-CRON_SECRET=change-me
+# Reminder Cron Security
+CRON_SECRET=
 
-# ── EthSL sign-language recognition (shared with the Python
-#    service in sign-recognition-service/) ─────────────────
-SIGN_SESSION_SECRET=change-me
+# Ethiopian Sign Language Recognition
+SIGN_SESSION_SECRET=
 SIGN_RECOGNITION_WS_URL=ws://localhost:8000
 ```
 
-> ⚠️ In production, `NEXT_PUBLIC_APP_URL` **must** be your real domain (e.g. `https://interviewloop.example.com`) — payout email links are built from it. On Vercel it falls back to `VERCEL_URL` automatically if unset.
+**Important configuration notes:**
 
-### 3. Set up the database
+- Obtain each credential from its corresponding provider dashboard.
+- Use strong, unique secrets for administrative and cron protection.
+- Keep `.env.local` out of Git and never commit real API keys.
+- Ensure `SIGN_SESSION_SECRET` matches between the Next.js application and the Python recognition service.
+- Set `NEXT_PUBLIC_APP_URL` to your actual deployed domain in production. This is particularly important for email links.
+- Use the exact variable names expected by your implementation. For example, some versions may support `STREAM_API_SECRET` as an alternative to `STREAM_SECRET_KEY`.
+
+### 4. Set Up the Database
+
+Configure your PostgreSQL connection string, then apply the existing Prisma migrations.
+
+For local development:
 
 ```bash
-npx prisma migrate dev   # applies the existing migrations
+npx prisma migrate dev
 ```
 
-Optional: seed a feedback record for a booking (`prisma/seed.js` — edit the `BOOKING_ID` first).
+For production deployments:
 
-### 4. Run the dev server
+```bash
+npx prisma migrate deploy
+```
+
+If your project uses a separate Prisma generation script, run:
+
+```bash
+npx prisma generate
+```
+
+Use the existing migration history rather than resetting a database that contains important data.
+
+### 5. Start the Development Server
 
 ```bash
 npm run dev
@@ -135,108 +178,167 @@ npm run dev
 
 Open [http://localhost:3000](http://localhost:3000).
 
-For the **live code editor** in interviews, also start the collaboration
-server in a second terminal (rooms sync through it; without it the editor
-still works locally and shows a "Local only" badge):
+### 6. Start the Collaborative Code Editor
+
+Open a second terminal in the project directory:
 
 ```bash
 npm run collab
 ```
 
-For **sign-language assistance** during calls, run the recognition service
-(see `sign-recognition-service/README.md`; `ALLOW_STUB=true` exercises the
-pipeline in development without a trained EthSL model):
+The collaboration server synchronizes code between interview participants. Without the shared WebSocket server, the editor may operate in local-only mode.
 
-```bash
-cd sign-recognition-service && pip install -r requirements.txt
-SIGN_SESSION_SECRET=<same as .env> uvicorn app.main:app --port 8000
+### 7. Start the EthSL Recognition Service
+
+The experimental sign-language service runs separately from Next.js.
+
+In a second or third terminal:
+
+```powershell
+cd sign-recognition-service
+python -m venv .venv
+.\.venv\Scripts\Activate.ps1
+python -m pip install -r requirements.txt
 ```
+
+Configure the same `SIGN_SESSION_SECRET` used by the main application, then start the service:
+
+```powershell
+$env:SIGN_SESSION_SECRET="your-shared-secret"
+uvicorn app.main:app --host 127.0.0.1 --port 8000
+```
+
+If your service requires `ALLOW_STUB=true` during development, configure it explicitly according to `sign-recognition-service/README.md`.
+
+**Note:** Stub mode tests the integration pipeline; it does not provide genuine Ethiopian Sign Language recognition. Real recognition requires a compatible trained model and verified inference pipeline.
 
 ---
 
 ## 📜 Available Scripts
 
-| Command            | Description                               |
-| ------------------ | ----------------------------------------- |
-| `npm run dev`      | Start the Next.js dev server              |
-| `npm run collab`   | Start the Yjs websocket sync server       |
-| `npm run build`    | Generate Prisma client + production build |
-| `npm start`        | Serve the production build                |
-| `npm run lint`     | Run ESLint                                |
-| `npx tsc --noEmit` | Type-check the project                    |
+| Command | Description |
+|---|---|
+| `npm run dev` | Start the Next.js development server |
+| `npm run collab` | Start the collaborative editing server |
+| `npm run build` | Build the application for production |
+| `npm start` | Start the production server |
+| `npm run lint` | Run ESLint |
+| `npx tsc --noEmit` | Run TypeScript type checking |
+
+Available scripts depend on the commands defined in `package.json`.
 
 ---
 
 ## 🗂️ Project Structure
 
-```
-actions/        # Server actions (booking, calls, feedback, payout, dashboard…)
+```text
+actions/                  # Server actions for bookings, feedback, payouts, etc.
 app/
-  (auth)/       # Clerk sign-in / sign-up
-  (main)/       # Authenticated app: appointments, call room, dashboard,
-                #   explore, interviewers, onboarding, payout
-  api/          # Route handlers (Stream webhook)
-  page.jsx      # Landing page (hero, features, pricing, CTA)
-components/     # Reusable UI, shadcn-style ui/, animate-ui, feedback modal
-emails/         # React Email templates (withdrawal requests)
-hooks/          # use-fetch, use-is-in-view, use-controlled-state
-lib/            # Prisma client, helpers, Gemini feedback pipeline, Arcjet,
-                #   Stream credential helper, URL builder
-prisma/         # Schema + migrations
-public/         # Static assets (logos, hero images)
-proxy.js        # Middleware (Clerk + Arcjet)
+  (auth)/                 # Authentication pages
+  (main)/                 # Authenticated application pages
+  api/                    # API routes and webhook handlers
+components/               # Reusable UI components
+emails/                   # React Email templates
+hooks/                    # Reusable React hooks
+lib/                      # Database, AI, security, and helper utilities
+prisma/                   # Prisma schema and migrations
+public/                   # Static assets
+sign-recognition-service/ # Python-based sign recognition service
+proxy.js                  # Request interception and protection
 ```
+
+The exact directory structure may vary as the project evolves.
 
 ---
 
-## 🤖 How AI Feedback Works
+## 🤖 How AI Interview Feedback Works
 
-```
-Call ends
-  ↓
-Stream transcription ready  →  POST /api/webhooks/stream  (HMAC-verified)
-  ↓
-Transcript downloaded & parsed (JSONL → conversation)
-  ↓
-Gemini (gemini-3.5-flash) analyzes the session
-  ↓
-Report sanitized (scores clamped 1–10, enum rating validated, arrays trimmed)
-  ↓
-Saved to DB + booking marked COMPLETED + interviewer credited
-  ↓
-Candidate opens the past appointment → "View Feedback" → full report modal
+The live-interview feedback workflow follows these steps:
+
+```text
+1. Interview session ends
+          ↓
+2. Stream transcription becomes available
+          ↓
+3. Stream webhook sends an event
+          ↓
+4. Server verifies the webhook signature
+          ↓
+5. Transcript is retrieved and parsed
+          ↓
+6. Gemini analyzes the interview
+          ↓
+7. The generated feedback is validated and sanitized
+          ↓
+8. Feedback is saved to the database
+          ↓
+9. Booking is marked completed and interviewer earnings are recorded
+          ↓
+10. Candidate opens the completed booking to view feedback
 ```
 
-The webhook path is automatic. A manual **"Generate report"** fallback is available on past appointments if the webhook didn't fire (e.g. local development).
+The application also provides a manual **Generate Report** fallback for eligible past appointments when automatic processing has not completed, such as during local development.
+
+The feedback pipeline should be idempotent so that repeated webhook events do not create duplicate earnings or inconsistent booking records.
 
 ---
 
-## 🔒 Security Notes
+## 🔒 Security Considerations
 
-- **Stream webhooks** are verified with HMAC-SHA256 over the raw request body — forged events are rejected with `401`.
-- **Payout pages** (`/payout/[id]`) are server-protected: unauthenticated and non-admin requests return `404` (no existence leak), and approval requires `ADMIN_EMAIL` + password.
-- **AI feedback** is only readable through the authenticated user's own scoped bookings — there is no feedback-by-ID endpoint.
-- **API keys** live only on the server — nothing sensitive is exposed to the client bundle.
-- **Arcjet** rate limits booking and withdrawal actions.
+- **Webhook verification:** Verify Stream webhook signatures against the raw request body before processing event data.
+- **Authorization:** Check authentication, user ownership, and permissions on every sensitive server action and API route.
+- **Payout protection:** Restrict payout approval to authorized administrators and protect approval credentials.
+- **AI output validation:** Validate generated scores, ratings, arrays, and other expected fields before saving feedback.
+- **Rate limiting:** Apply appropriate limits to booking, withdrawal, and other abuse-sensitive actions.
+- **Secret management:** Keep private API keys and administrative credentials out of client-side code.
+- **File uploads:** Validate PDF uploads, enforce size limits, and process documents securely.
+- **Sign-language privacy:** Obtain appropriate consent before processing or sharing video-derived information.
+- **Idempotent financial operations:** Protect credit deductions, interviewer earnings, and payouts against duplicate processing.
+
+These are security goals; verify each against the actual implementation before describing it as fully enforced.
 
 ---
 
 ## ☁️ Deployment
 
-The app deploys anywhere Next.js runs (Vercel, Railway, a VPS…).
+InterviewLoop can be deployed to Vercel or another platform that supports the application's runtime requirements.
 
-1. Push the repo to GitHub.
-2. Set **all** environment variables from the table above on the host (use the real domain for `NEXT_PUBLIC_APP_URL`).
-3. Run `npx prisma migrate deploy` against the production database.
-4. Configure the **Stream webhook** in the Stream dashboard to point at `https://<your-domain>/api/webhooks/stream`.
-5. Deploy with `npm run build && npm start` (or the platform's build command).
+1. Push the repository to GitHub.
+2. Configure the required environment variables in your hosting provider.
+3. Configure the production PostgreSQL database.
+4. Apply migrations with `npx prisma migrate deploy`.
+5. Set `NEXT_PUBLIC_APP_URL` to the production domain.
+6. Configure the Stream webhook URL:
+
+   ```text
+   https://your-domain.com/api/webhooks/stream
+   ```
+
+7. Deploy the Next.js application using the hosting provider's build settings.
+8. Deploy the collaborative WebSocket server separately if your hosting platform cannot run it as part of the Next.js application.
+9. Deploy the Python recognition service separately and configure a secure WebSocket endpoint.
+10. Configure the reminder cron schedule and its authentication secret if the application relies on scheduled reminders.
+11. Test authentication, bookings, payments, webhook processing, AI feedback, email notifications, and authorization before going live.
+
+**Production note:** The collaborative editor and sign-language recognition service require their own reachable endpoints. Configure HTTPS/WSS where appropriate, and do not expose internal service credentials.
 
 ---
 
-<div align="center">
+## 🛣️ Future Improvements
 
-**Built with Next.js · Clerk · Stream · Gemini · Prisma · Supabase**
+Potential improvements include:
 
-</div>
-#   d a v e  
- # interview-loop
+- A larger, validated Ethiopian Sign Language dataset and a trained recognition model.
+- More robust CV-to-job matching and personalized interview preparation.
+- Improved AI feedback calibration and progress analytics.
+- Better accessibility, multilingual support, and mobile responsiveness.
+- Stronger automated tests for booking conflicts, credit accounting, and webhook idempotency.
+- Improved monitoring and error reporting for background processing and external services.
+
+---
+
+## 👨‍💻 Built With
+
+**Next.js · React · TypeScript · Clerk · Stream · Google Gemini · Prisma · Supabase · Tailwind CSS · Python · FastAPI**
+
+InterviewLoop aims to make interview preparation more accessible by combining expert guidance, practical coding sessions, and personalized AI feedback in one platform.
