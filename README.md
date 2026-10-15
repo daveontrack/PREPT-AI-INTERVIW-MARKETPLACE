@@ -238,3 +238,5 @@ The app deploys anywhere Next.js runs (Vercel, Railway, a VPS…).
 **Built with Next.js · Clerk · Stream · Gemini · Prisma · Supabase**
 
 </div>
+#   d a v e  
+ 
